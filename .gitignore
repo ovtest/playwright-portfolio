@@ -1,0 +1,12 @@
+# Python virtual environment and caches
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Test output (regenerated on every run)
+reports/
+test-results/
+
+# IDE settings
+.idea/
+.vscode/
