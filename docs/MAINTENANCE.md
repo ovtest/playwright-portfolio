@@ -66,10 +66,21 @@ cd /d %~dp0
 pause
 ```
 
-### In CI (planned)
+### In CI (GitHub Actions)
 
-GitHub Actions can run the suite on every push, on Windows / macOS / Linux in parallel.
-See "Cross-browser and cross-OS strategy" in [LEARNING_NOTES.md](LEARNING_NOTES.md).
+Defined in `.github/workflows/tests.yml`. On every push / pull request to `main` it runs the suite on
+a fresh Linux machine, once per browser (Chromium, Firefox, WebKit) in parallel.
+
+- **See results:** repo page → **Actions** tab → click a run. Green ✔ / red ✘ per browser job.
+  The badge at the top of the README shows the latest result.
+- **Reports:** at the bottom of a run's page, under **Artifacts**: `report-<browser>` (HTML report, every run)
+  and `test-results-<browser>` (screenshots / videos / traces, only when a test failed). Kept 14 days.
+  Download, unzip, open `report.html`; open traces with `playwright show-trace`.
+- **Run manually:** Actions tab → "Playwright Tests" → **Run workflow**.
+- **Change browsers / OS:** edit the `matrix:` section of the workflow file
+  (see "Cross-browser and cross-OS strategy" in [LEARNING_NOTES.md](LEARNING_NOTES.md)).
+- CI installs the exact versions from `requirements.txt`, so keep it pinned and up to date (section 4).
+- Free for public repositories.
 
 ---
 

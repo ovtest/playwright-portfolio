@@ -1,0 +1,62 @@
+# GitHub Actions workflow: runs the test suite automatically on GitHub's machines.
+# GitHub picks up any .yml file in .github/workflows/ automatically.
+
+name: Playwright Tests
+
+# When to run
+on:
+  push:
+    branches: [main]        # every push to main
+  pull_request:
+    branches: [main]        # every pull request into main
+  workflow_dispatch:        # a "Run workflow" button on the Actions tab
+
+jobs:
+  test:
+    name: Tests (${{ matrix.browser }})
+    runs-on: ubuntu-latest  # a fresh Linux machine for each run
+    timeout-minutes: 15
+
+    # Matrix: run this job once per browser, in parallel
+    strategy:
+      fail-fast: false      # if one browser fails, let the others finish
+      matrix:
+        browser: [chromium, firefox, webkit]
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip         # reuse downloaded packages between runs
+
+      - name: Install packages (pinned versions)
+        run: pip install -r requirements.txt
+
+      - name: Install the browser and its system libraries
+        run: python -m playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run tests
+        run: python -m pytest --browser ${{ matrix.browser }}
+
+      # Save the HTML report from every run (downloadable from the run's page)
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.browser }}
+          path: reports/
+          retention-days: 14
+
+      # Screenshots, videos and traces exist only when a test failed
+      - name: Upload failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.browser }}
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,5 +1,7 @@
 # Playwright + Python UI Test Framework
 
+[![Playwright Tests](https://github.com/ovtest/playwright-portfolio/actions/workflows/tests.yml/badge.svg)](https://github.com/ovtest/playwright-portfolio/actions/workflows/tests.yml)
+
 UI test automation framework for the demo store [saucedemo.com](https://www.saucedemo.com),
 built with **Playwright**, **pytest** and the **Page Object Model**.
 
@@ -19,6 +21,7 @@ Tests are tagged `smoke` (critical path) or `regression` (wider coverage).
 - [Playwright for Python](https://playwright.dev/python/) with `pytest-playwright`
 - pytest (fixtures, markers, parametrization)
 - pytest-html for reports
+- GitHub Actions CI: every push runs the suite on Chromium, Firefox and WebKit in parallel
 
 ## Project structure
 
@@ -35,7 +38,9 @@ tests/              Test cases, grouped by feature
   test_cart.py
   test_checkout.py
 config.py           Test data (users, customer details)
-pytest.ini          Run settings: base URL, browser, reports, markers
+pytest.ini          Run settings: base URL, reports, markers
+.github/workflows/
+  tests.yml         CI pipeline (GitHub Actions)
 ```
 
 ## Design decisions
@@ -73,8 +78,14 @@ To inspect a failed test step by step: `playwright show-trace test-results/<test
 - [Maintenance guide](docs/MAINTENANCE.md): running tests (CLI, PyCharm, batch, browsers), updating Playwright, reports and traces, troubleshooting
 - [Learning notes](docs/LEARNING_NOTES.md): locator strategy, codegen, debugging, cross-browser / cross-OS approach, roadmap
 
+## Continuous integration
+
+On every push and pull request to `main`, GitHub Actions runs the full suite on Linux against
+Chromium, Firefox and WebKit in parallel (one job per browser). Each run keeps the HTML report,
+plus screenshots, videos and traces for any failed test, as downloadable artifacts.
+It can also be started manually from the **Actions** tab ("Run workflow").
+
 ## Planned next steps
 
 - API tests with Playwright's `request` context
-- GitHub Actions CI pipeline
-- Cross-browser runs
+- Windows / macOS jobs with real Chrome and Edge

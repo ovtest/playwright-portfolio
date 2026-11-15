@@ -153,9 +153,10 @@ Speed-up for bigger suites: `pytest-xdist` + `-n auto` runs tests in parallel.
 
 ## 5. Roadmap for this project
 
-- [ ] Configure git name/email, first commit, publish on GitHub (needs a GitHub account)
-- [ ] Pin package versions in `requirements.txt`
-- [ ] GitHub Actions CI (with a cross-browser / cross-OS matrix) + status badge in README
+- [x] Configure git name/email, first commit, publish on GitHub
+- [x] Pin package versions in `requirements.txt`
+- [x] GitHub Actions CI (Linux, Chromium / Firefox / WebKit matrix) + status badge in README
+- [ ] Extend CI: Windows / macOS jobs with real Chrome and Edge (`--browser-channel`)
 - [ ] Screenshot of the HTML report in README
 - [ ] API tests with Playwright's `request` context (e.g. restful-booker.herokuapp.com)
 - [ ] Practice: product sorting test (record with codegen, refactor into `inventory_page.py`)
