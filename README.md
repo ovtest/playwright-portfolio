@@ -13,6 +13,8 @@ built with **Playwright**, **pytest** and the **Page Object Model**.
 | Cart | Add item updates badge, cart lists added items, remove item |
 | Checkout | Full end-to-end purchase, required-field validation |
 
+Test customer data lives in `config.py` (one place to change it for all tests).
+
 Tests are tagged `smoke` (critical path) or `regression` (wider coverage).
 
 ## Tech stack
