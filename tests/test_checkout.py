@@ -30,3 +30,14 @@ def test_checkout_requires_first_name(logged_in_page, page):
     checkout.fill_customer_info("", "User", "12345")
 
     expect(checkout.error_message).to_contain_text("First Name is required")
+
+@pytest.mark.regression
+def test_checkout_requires_last_name(logged_in_page, page):
+    logged_in_page.add_to_cart("Sauce Labs Backpack")
+    logged_in_page.open_cart()
+    CartPage(page).checkout()
+
+    checkout = CheckoutPage(page)
+    checkout.fill_customer_info("Jane", "", "12345")
+
+    expect(checkout.error_message).to_contain_text("Last Name is required")

@@ -8,4 +8,4 @@ PASSWORD = "secret_sauce"
 STANDARD_USER = "standard_user"
 LOCKED_OUT_USER = "locked_out_user"
 
-CUSTOMER = {"first_name": "Test", "last_name": "User", "postal_code": "12345"}
+CUSTOMER = {"first_name": "Olga", "last_name": "User", "postal_code": "12345"}
